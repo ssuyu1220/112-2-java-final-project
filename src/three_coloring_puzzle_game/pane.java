@@ -1,3 +1,5 @@
+package three_coloring_puzzle_game;
+
 import javafx.animation.RotateTransition;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;

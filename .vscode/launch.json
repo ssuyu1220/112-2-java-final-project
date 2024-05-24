@@ -6,6 +6,30 @@
     "configurations": [
         {
             "type": "java",
+            "name": "tmp_dice",
+            "request": "launch",
+            "mainClass": "main_game.tmp_dice",
+            "projectName": "112-2 java final project_7a392a36",
+            "vmArgs": "--module-path C:/javafx-sdk-22.0.1/lib --add-modules=ALL-MODULE-PATH"
+        },
+        {
+            "type": "java",
+            "name": "main_game",
+            "request": "launch",
+            "mainClass": "main_game.main_game",
+            "projectName": "112-2 java final project_7a392a36",
+            "vmArgs": "--module-path C:/javafx-sdk-22.0.1/lib --add-modules=ALL-MODULE-PATH"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "three_coloring_puzzle_game.Main",
+            "projectName": "112-2 java final project_7a392a36",
+            "vmArgs": "--module-path C:/javafx-sdk-22.0.1/lib --add-modules=ALL-MODULE-PATH"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}",

@@ -1,3 +1,5 @@
+package three_coloring_puzzle_game;
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
