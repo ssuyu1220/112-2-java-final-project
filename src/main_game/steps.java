@@ -61,7 +61,7 @@ class dice_handler implements EventHandler<ActionEvent> {
                     }
                     else{
                         roll = "play secreat game";
-                        int secretGame=(int) (Math.random() * 3) + 1;
+                        /*int secretGame=(int) (Math.random() * 3) + 1;
                         //paulse for 3 sec.
                         PauseTransition delay = new PauseTransition(Duration.seconds(3));
                         delay.setOnFinished(event ->{
@@ -75,7 +75,7 @@ class dice_handler implements EventHandler<ActionEvent> {
                             stage.show();
                         });
                         delay.play();
-                        System.out.println(secretGame);
+                        System.out.println(secretGame);*/
                     }
                     System.out.println(lucky);
                     tmp_dice.result.setText(String.format("Result : %s", roll));
