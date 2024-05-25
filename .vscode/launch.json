@@ -6,6 +6,14 @@
     "configurations": [
         {
             "type": "java",
+            "name": "guessnumber",
+            "request": "launch",
+            "mainClass": "guess_number_game.guessnumber",
+            "projectName": "112-2 java final project_7a392a36",
+            "vmArgs": "--module-path C:/javafx-sdk-22.0.1/lib --add-modules=ALL-MODULE-PATH"
+        },
+        {
+            "type": "java",
             "name": "tmp_dice",
             "request": "launch",
             "mainClass": "main_game.tmp_dice",

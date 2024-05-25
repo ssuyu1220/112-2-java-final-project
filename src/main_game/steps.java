@@ -28,6 +28,7 @@ class dice_handler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent e) {
+        tmp_dice.result.setText("");
         tmp_dice.create_dice_stage();
         tmp_dice.dice_stage.show();
         tmp_dice.submit.setOnAction(new EventHandler<ActionEvent>() {
@@ -59,6 +60,7 @@ class dice_handler implements EventHandler<ActionEvent> {
                 steps.players_pos[steps.cur_player] += lucky;
                 steps.cur_player = (steps.cur_player + 1) % 4;
                 steps.set_pos_visible();
+                lucky = 0;
             }
         });
     }
