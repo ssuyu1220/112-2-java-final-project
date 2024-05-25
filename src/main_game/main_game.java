@@ -26,6 +26,7 @@ class PausePage extends Pane {
     private BorderPane contigamepane = new BorderPane();
     private BorderPane newgamPane = new BorderPane();
     private eelsAndEscalator origin;
+    private Scene origionscene;
 
     File restartfile = new File("resources/restart.jpg");
     Image restartImage = new Image(restartfile.toURI().toString());
@@ -39,7 +40,7 @@ class PausePage extends Pane {
     Image continueImage = new Image(continuefile.toURI().toString());
     ImageView continueImageView = new ImageView(continueImage);
 
-    public PausePage(Stage stage, BorderPane pane, eelsAndEscalator originEelsAndEscalator) {
+    public PausePage(Stage stage, BorderPane pane, eelsAndEscalator originEelsAndEscalator, Scene origionScene) {
         this.stage = stage;
         startpane = pane;
         //原本正在進行的遊戲
@@ -49,6 +50,7 @@ class PausePage extends Pane {
         newgamPane.setCenter(newEelsAndEscalator);
         //指派本來在進行的遊戲給origin
         origin = originEelsAndEscalator;
+        origionscene = origionScene;
         getChildren().addAll(backgroundGroup, restartImageView, homeImageView, continueImageView);
         Pause();
     }
@@ -98,7 +100,7 @@ class PausePage extends Pane {
 
             restarButton.setOnMouseClicked(cl -> {
                 BorderPane PausePane = new BorderPane();
-                PausePage pausepage = new PausePage(stage, new BorderPane(startpane), origin);
+                PausePage pausepage = new PausePage(stage, new BorderPane(startpane), origin, origionscene);
                 PausePane.setCenter(pausepage);
                 Scene pausesScene = new Scene(PausePane, 1200, 700);
                 stage.setScene(pausesScene);
@@ -126,12 +128,11 @@ class PausePage extends Pane {
 
             contigamepane.setTop(restarButton);
             BorderPane.setAlignment(restarButton, Pos.CENTER);
-            Scene gamescene = new Scene(contigamepane, 1200, 700);
-            stage.setScene(gamescene);
+            stage.setScene(origionscene);
 
             restarButton.setOnMouseClicked(cl -> {
                 BorderPane PausePane = new BorderPane();
-                PausePage pausepage = new PausePage(stage, new BorderPane(startpane), origin);
+                PausePage pausepage = new PausePage(stage, new BorderPane(startpane), origin, origionscene);
                 PausePane.setCenter(pausepage);
                 Scene pausesScene = new Scene(PausePane, 1200, 700);
                 stage.setScene(pausesScene);
@@ -256,7 +257,7 @@ public class main_game extends Application {
 
             restarButton.setOnMouseClicked(cl -> {
                 BorderPane PausePane = new BorderPane();
-                PausePage pausepage = new PausePage(arg0, new BorderPane(Pane), game);
+                PausePage pausepage = new PausePage(arg0, new BorderPane(Pane), game, gamescene);
                 PausePane.setCenter(pausepage);
                 Scene pausesScene = new Scene(PausePane, 1200, 700);
                 arg0.setScene(pausesScene);
