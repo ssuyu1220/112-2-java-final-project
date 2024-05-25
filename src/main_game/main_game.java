@@ -1,4 +1,5 @@
 package main_game;
+
 import javafx.fxml.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -170,10 +171,7 @@ class eelsAndEscalator extends Pane {
 
     public eelsAndEscalator() {
         getChildren().addAll(baGroup, gameImageView, ButtonGroup);
-<<<<<<< HEAD
         getChildren().addAll(steps.steps);
-=======
->>>>>>> a6a1690a76619e567146b85977cda89ba83519e6
         PlayEelsAndEscalator();
 
         // Bind the width and height properties to ensure dynamic resizing
@@ -218,11 +216,7 @@ class eelsAndEscalator extends Pane {
 
 }
 
-<<<<<<< HEAD
 public class main_game extends Application {
-=======
-public class FinalProject extends Application {
->>>>>>> a6a1690a76619e567146b85977cda89ba83519e6
 
     public void start(Stage arg0) {
         BorderPane Pane = new BorderPane();
@@ -247,18 +241,12 @@ public class FinalProject extends Application {
 
         Scene scene = new Scene(Pane, 1200, 700);
         Pane.setOnMouseClicked(ev -> {
-<<<<<<< HEAD
             steps.creat_steps();
-=======
->>>>>>> a6a1690a76619e567146b85977cda89ba83519e6
             BorderPane gamePane = new BorderPane();
             eelsAndEscalator game = new eelsAndEscalator();
             gamePane.setCenter(game);
 
-<<<<<<< HEAD
             HBox top_box = new HBox();
-=======
->>>>>>> a6a1690a76619e567146b85977cda89ba83519e6
             Button restarButton = new Button("PAUSE");
             restarButton.styleProperty().bind(Bindings.concat(
                     "-fx-font-size: ", gamePane.heightProperty().divide(30).asString(), "px; ",
@@ -266,14 +254,12 @@ public class FinalProject extends Application {
                     "-fx-font-family: 'Times New Roman'; ",
                     "-fx-font-weight: bold; ",
                     "-fx-font-style: italic;"));
-<<<<<<< HEAD
+
             top_box.getChildren().addAll(restarButton, steps.dice);
             top_box.setAlignment(Pos.CENTER);
             gamePane.setTop(top_box);
-=======
 
             gamePane.setTop(restarButton);
->>>>>>> a6a1690a76619e567146b85977cda89ba83519e6
             BorderPane.setAlignment(restarButton, Pos.CENTER);
             Scene gamescene = new Scene(gamePane, 1200, 700);
             arg0.setScene(gamescene);
