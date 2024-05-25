@@ -172,6 +172,8 @@ class eelsAndEscalator extends Pane {
     public eelsAndEscalator() {
         getChildren().addAll(baGroup, gameImageView, ButtonGroup);
         getChildren().addAll(steps.steps);
+        getChilden().addAll(steps.ladders);
+        getChildren().add(dice_handler.moving);
         PlayEelsAndEscalator();
 
         // Bind the width and height properties to ensure dynamic resizing
@@ -242,6 +244,7 @@ public class main_game extends Application {
         Scene scene = new Scene(Pane, 1200, 700);
         Pane.setOnMouseClicked(ev -> {
             steps.creat_steps();
+            steps.create_ladders();
             BorderPane gamePane = new BorderPane();
             eelsAndEscalator game = new eelsAndEscalator();
             gamePane.setCenter(game);
