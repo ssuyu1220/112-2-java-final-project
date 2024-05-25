@@ -42,12 +42,12 @@ class PausePage extends Pane {
     public PausePage(Stage stage, BorderPane pane, eelsAndEscalator originEelsAndEscalator) {
         this.stage = stage;
         startpane = pane;
-
+        //原本正在進行的遊戲
         contigamepane.setCenter(originEelsAndEscalator);
-
+        //新的遊戲
         eelsAndEscalator newEelsAndEscalator = new eelsAndEscalator();
         newgamPane.setCenter(newEelsAndEscalator);
-
+        //指派本來在進行的遊戲給origin
         origin = originEelsAndEscalator;
         getChildren().addAll(backgroundGroup, restartImageView, homeImageView, continueImageView);
         Pause();
