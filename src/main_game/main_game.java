@@ -43,12 +43,12 @@ class PausePage extends Pane {
     public PausePage(Stage stage, BorderPane pane, eelsAndEscalator originEelsAndEscalator, Scene origionScene) {
         this.stage = stage;
         startpane = pane;
-        //原本正在進行的遊戲
+        // 原本正在進行的遊戲
         contigamepane.setCenter(originEelsAndEscalator);
-        //新的遊戲
+        // 新的遊戲
         eelsAndEscalator newEelsAndEscalator = new eelsAndEscalator();
         newgamPane.setCenter(newEelsAndEscalator);
-        //指派本來在進行的遊戲給origin
+        // 指派本來在進行的遊戲給origin
         origin = originEelsAndEscalator;
         origionscene = origionScene;
         getChildren().addAll(backgroundGroup, restartImageView, homeImageView, continueImageView);
@@ -128,6 +128,7 @@ class PausePage extends Pane {
 
             contigamepane.setTop(restarButton);
             BorderPane.setAlignment(restarButton, Pos.CENTER);
+
             stage.setScene(origionscene);
 
             restarButton.setOnMouseClicked(cl -> {
@@ -213,7 +214,7 @@ class eelsAndEscalator extends Pane {
 
 }
 
-public class main_game extends Application {
+public class FinalProject extends Application {
 
     public void start(Stage arg0) {
         BorderPane Pane = new BorderPane();
