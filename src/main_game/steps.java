@@ -1,5 +1,6 @@
 package main_game;
 
+import javafx.animation.PauseTransition;
 import javafx.animation.RotateTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -23,35 +24,63 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.WindowEvent;
 import java.util.*;
 
+import guess_number_game.*;
+import three_coloring_puzzle_game.*;
+
 class dice_handler implements EventHandler<ActionEvent> {
     private int lucky = 0;
-
+    ///
+    private int once=0;
     @Override
     public void handle(ActionEvent e) {
         tmp_dice.result.setText("");
         tmp_dice.create_dice_stage();
         tmp_dice.dice_stage.show();
         tmp_dice.submit.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent e) {
-                lucky = (int) (Math.random() * 12) + 1;
-                RotateTransition rotateTransition = new RotateTransition(Duration.seconds(2), tmp_dice.roulette);
-                rotateTransition.setFromAngle(0);// restart from 0
-                rotateTransition.setByAngle(360 + 30 * (12 - lucky)); // rotate 360 + 30 * (12 - lucky)
-                rotateTransition.setAutoReverse(false); // 不自動反轉
-                // start to rotate
-                rotateTransition.play();
-                // display result text
-                String roll = new String();
-                lucky = lucky % 4 + 1;
-                if (lucky == 1)
-                    roll = "go " + Integer.toString(lucky) + " step";
-                else if (lucky < 4)
-                    roll = "go " + Integer.toString(lucky) + " steps";
-                else
-                    roll = "play secreat game";
-                tmp_dice.result.setText(String.format("Result : %s", roll));
-                tmp_dice.result.setVisible(true);
+                ///
+                once++;
+                if(once<=1){
+                    lucky = (int) (Math.random() * 12) + 1;
+                    RotateTransition rotateTransition = new RotateTransition(Duration.seconds(2), tmp_dice.roulette);
+                    rotateTransition.setFromAngle(0);// restart from 0
+                    rotateTransition.setByAngle(360 + 30 * (12 - lucky)); // rotate 360 + 30 * (12 - lucky)
+                    rotateTransition.setAutoReverse(false); // 不自動反轉
+                    // start to rotate
+                    rotateTransition.play();
+                    // display result text
+                    String roll = new String();
+                    lucky = lucky % 4 + 1;
+                    if (lucky == 1){
+                        roll = "go " + Integer.toString(lucky) + " step";
+                    }
+                    else if (lucky < 4){
+                        roll = "go " + Integer.toString(lucky) + " steps";
+                    }
+                    else{
+                        roll = "play secreat game";
+                        /*int secretGame=(int) (Math.random() * 3) + 1;
+                        //paulse for 3 sec.
+                        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+                        delay.setOnFinished(event ->{
+                            Stage stage=new Stage();
+                            if (secretGame==1){
+                                new guessnumber().start(stage);
+                            }
+                            else if(secretGame==2){
+                                new Main().start(stage);
+                            }
+                            stage.show();
+                        });
+                        delay.play();
+                        System.out.println(secretGame);*/
+                    }
+                    System.out.println(lucky);
+                    tmp_dice.result.setText(String.format("Result : %s", roll));
+                    tmp_dice.result.setVisible(true);
+                }
             }
         });
         tmp_dice.dice_stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -60,7 +89,11 @@ class dice_handler implements EventHandler<ActionEvent> {
                 steps.players_pos[steps.cur_player] += lucky;
                 steps.cur_player = (steps.cur_player + 1) % 4;
                 steps.set_pos_visible();
+<<<<<<< HEAD
                 lucky = 0;
+=======
+                lucky=0;
+>>>>>>> a6a1690a76619e567146b85977cda89ba83519e6
             }
         });
     }
