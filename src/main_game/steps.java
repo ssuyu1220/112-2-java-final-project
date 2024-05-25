@@ -120,6 +120,7 @@ class dice_handler implements EventHandler<ActionEvent> {
                     int aim=0;
                     Color color=steps.player_color[steps.cur_player];
                     moving.setFill(color);
+                    moving.setVisible(true);
                     TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(2), moving);
                     switch(climb){
                         case 1: //1-10
