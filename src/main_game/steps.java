@@ -2,6 +2,7 @@ package main_game;
 
 import javafx.animation.PauseTransition;
 import javafx.animation.RotateTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,6 +32,8 @@ class dice_handler implements EventHandler<ActionEvent> {
     private int lucky = 0;
     ///
     private int once=0;
+    private int climb=0;
+    public static Circle moving=new Circle(6.0);
     @Override
     public void handle(ActionEvent e) {
         tmp_dice.result.setText("");
@@ -52,16 +55,43 @@ class dice_handler implements EventHandler<ActionEvent> {
                     rotateTransition.play();
                     // display result text
                     String roll = new String();
-                    lucky = lucky % 4 + 1;
+                    lucky =5;// lucky % 6 + 1;
                     if (lucky == 1){
                         roll = "go " + Integer.toString(lucky) + " step";
                     }
                     else if (lucky < 4){
                         roll = "go " + Integer.toString(lucky) + " steps";
                     }
+                    else if(lucky == 5){
+                        /*
+                         * 我先設轉到梯子並在梯子前一格才能爬梯子
+                         * 如果不符合條件則重轉
+                         */
+                        switch(steps.players_pos[steps.cur_player]){
+                            case 0:
+                                roll ="climb ladder";
+                                climb=1;
+                                break;
+                            case 10:
+                                roll ="climb ladder";
+                                climb=3;
+                                break;
+                            case 4:
+                                roll ="climb ladder";
+                                climb=2;
+                                break;
+                            default:
+                                once=0;
+                                roll ="spin again";
+                                break;
+                        }
+                    }
+                    else if(lucky == 6){
+                        roll="eel";
+                    }
                     else{
                         roll = "play secreat game";
-                        /*int secretGame=(int) (Math.random() * 3) + 1;
+                        int secretGame=(int) (Math.random() * 3) + 1;
                         //paulse for 3 sec.
                         PauseTransition delay = new PauseTransition(Duration.seconds(3));
                         delay.setOnFinished(event ->{
@@ -75,7 +105,7 @@ class dice_handler implements EventHandler<ActionEvent> {
                             stage.show();
                         });
                         delay.play();
-                        System.out.println(secretGame);*/
+                        System.out.println(secretGame);
                     }
                     System.out.println(lucky);
                     tmp_dice.result.setText(String.format("Result : %s", roll));
@@ -86,14 +116,55 @@ class dice_handler implements EventHandler<ActionEvent> {
         tmp_dice.dice_stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent e) {
-                steps.players_pos[steps.cur_player] += lucky;
-                steps.cur_player = (steps.cur_player + 1) % 4;
-                steps.set_pos_visible();
-<<<<<<< HEAD
-                lucky = 0;
-=======
+                if(lucky==5 || lucky==6){
+                    int aim=0;
+                    Color color=steps.player_color[steps.cur_player];
+                    moving.setFill(color);
+                    TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(2), moving);
+                    switch(climb){
+                        case 1: //1-10
+                            aim=10;
+                            translateTransition.setFromX(390.0);
+                            translateTransition.setFromY(495.0);
+                            translateTransition.setToX(525.0);
+                            translateTransition.setToY(340.0);
+                            translateTransition.play();
+                            break;
+                        case 2: //5-8
+                            aim=8;
+                            translateTransition.setFromX(390.0);
+                            translateTransition.setFromY(495.0);
+                            translateTransition.setToX(760.0);
+                            translateTransition.setToY(345.0);
+                            translateTransition.play();
+                            break;
+                        case 3: //11-14
+                            aim=14;
+                            translateTransition.setFromX(400.0);
+                            translateTransition.setFromY(340.0);
+                            
+                            translateTransition.setToX(260.0);
+                            translateTransition.setToY(190.0);
+                            translateTransition.play();
+                            break;
+                    }
+                    translateTransition.setCycleCount(1); 
+                    translateTransition.setAutoReverse(false);
+                    steps.players_pos[steps.cur_player]=aim;
+                    translateTransition.setOnFinished(e1->{
+                        steps.cur_player = (steps.cur_player + 1) % 4;
+                        steps.set_pos_visible();
+                        moving.setVisible(false);
+                    });
+                    
+                }
+                else{
+                    steps.players_pos[steps.cur_player] += lucky;
+                    steps.cur_player = (steps.cur_player + 1) % 4;
+                    steps.set_pos_visible();
+                }
                 lucky=0;
->>>>>>> a6a1690a76619e567146b85977cda89ba83519e6
+                once=0;
             }
         });
     }
@@ -101,16 +172,33 @@ class dice_handler implements EventHandler<ActionEvent> {
 
 public class steps {
     public static Group[] steps = new Group[20];
+    public static Group ladders=new Group(); //ladders
     public static Circle[][] player_sym = new Circle[20][4];
     public static Button dice = new Button("dice");
     public static int cur_player = 0;
     public static int[] players_pos = { 0, 0, 0, 0 };
-
+    public static Color[] player_color = { Color.DARKSLATEGRAY, Color.DARKCYAN, Color.DARKGREY, Color.DARKMAGENTA };
+    public static void create_ladders(){
+        Rectangle[] basic=new Rectangle[3];
+        for(int i=0;i<3;i++){
+            basic[i]=new Rectangle(70,200,Color.WHEAT);
+            //basic[i].setStroke(Color.WHEAT);
+        }
+        basic[0].setLayoutX(365.0);
+        basic[0].setLayoutY(190.0);
+        basic[0].setRotate(-37);
+        basic[1].setLayoutX(830.0);
+        basic[1].setLayoutY(345.0);
+        basic[1].setRotate(-40);
+        basic[2].setLayoutX(445.0);
+        basic[2].setLayoutY(340.0);
+        basic[2].setRotate(47);
+        ladders.getChildren().addAll(basic);
+        set_pos_visible();
+    }
     public static void creat_steps() {
-
         dice.setLayoutX(60);
         dice.setOnAction(new dice_handler());
-        Color[] player_color = { Color.DARKSLATEGRAY, Color.DARKCYAN, Color.DARKGREY, Color.DARKMAGENTA };
         Rectangle[] back = new Rectangle[20];
         HBox[] players_box = new HBox[20];
         for (int i = 0; i < 20; i++) {
@@ -122,7 +210,7 @@ public class steps {
             }
             steps[i] = new Group();
             back[i] = new Rectangle(70, 30, Color.GOLD);
-            steps[i].getChildren().addAll(back[i], players_box[i]);
+            steps[i].getChildren().addAll(back[i], players_box[i],new Label(Integer.toString(i)));
         }
         steps[0].setLayoutX(265.0);
         steps[0].setLayoutY(495.0);
