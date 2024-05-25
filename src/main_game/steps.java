@@ -55,7 +55,7 @@ class dice_handler implements EventHandler<ActionEvent> {
                     rotateTransition.play();
                     // display result text
                     String roll = new String();
-                    lucky =5;// lucky % 6 + 1;
+                    lucky =lucky % 6 + 1;
                     if (lucky == 1){
                         roll = "go " + Integer.toString(lucky) + " step";
                     }
