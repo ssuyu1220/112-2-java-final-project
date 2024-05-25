@@ -172,7 +172,7 @@ class eelsAndEscalator extends Pane {
     public eelsAndEscalator() {
         getChildren().addAll(baGroup, gameImageView, ButtonGroup);
         getChildren().addAll(steps.steps);
-        getChilden().addAll(steps.ladders);
+        getChildren().addAll(steps.ladders);
         getChildren().add(dice_handler.moving);
         PlayEelsAndEscalator();
 
