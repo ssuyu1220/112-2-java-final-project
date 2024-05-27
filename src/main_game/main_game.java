@@ -104,6 +104,7 @@ public class main_game extends Application {
         Pane.setOnMouseClicked(ev -> {
             steps.creat_steps();
             steps.create_ladders();
+            steps.create_eels();
             BorderPane gamePane = new BorderPane();
             eelsAndEscalator game = new eelsAndEscalator();
             gamePane.setCenter(game);
