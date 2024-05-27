@@ -194,7 +194,7 @@ class dice_handler implements EventHandler<ActionEvent> {
                             moving.setLayoutX(750.0);
                             moving.setLayoutY(550.0);
                             steps.eel[0].setRotate(165.0);
-                            PathTransition ani1=new PathTransition(Duration.millis(10000),steps.eel[0],moving);
+                            PathTransition ani1=new PathTransition(Duration.millis(1000),steps.eel[0],moving);
                             ani1.setCycleCount(1);
                             ani1.play();
                             steps.sliding();
@@ -211,7 +211,7 @@ class dice_handler implements EventHandler<ActionEvent> {
                             moving.setLayoutX(255.0);
                             moving.setLayoutY(360.0);
                             steps.eel[1].setRotate(50.0);
-                            PathTransition ani2=new PathTransition(Duration.millis(10000),steps.eel[1],moving);
+                            PathTransition ani2=new PathTransition(Duration.millis(1000),steps.eel[1],moving);
                             ani2.setCycleCount(1);
                             ani2.play();
                             steps.sliding();
@@ -228,7 +228,7 @@ class dice_handler implements EventHandler<ActionEvent> {
                             moving.setLayoutX(490.0);
                             moving.setLayoutY(140.0);
                             steps.eel[2].setRotate(195.0);
-                            PathTransition ani3=new PathTransition(Duration.millis(10000),steps.eel[2],moving);
+                            PathTransition ani3=new PathTransition(Duration.millis(1000),steps.eel[2],moving);
                             ani3.setCycleCount(1);
                             ani3.play();
                             steps.sliding();
@@ -245,7 +245,7 @@ class dice_handler implements EventHandler<ActionEvent> {
                             moving.setLayoutX(700.0);
                             moving.setLayoutY(350.0);
                             steps.eel[3].setRotate(-250.0);
-                            PathTransition ani4=new PathTransition(Duration.millis(500),steps.eel[3],moving);
+                            PathTransition ani4=new PathTransition(Duration.millis(1000),steps.eel[3],moving);
                             ani4.setCycleCount(1);
                             ani4.play();
                             steps.sliding();
