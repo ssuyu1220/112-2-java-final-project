@@ -1,9 +1,13 @@
 package main_game;
 
+import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableListBase;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -15,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polyline;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -33,6 +38,7 @@ class dice_handler implements EventHandler<ActionEvent> {
     ///
     private int once=0;
     private int climb=0;
+    private int slide=0;
     public static Circle moving=new Circle(6.0);
     @Override
     public void handle(ActionEvent e) {
@@ -55,7 +61,7 @@ class dice_handler implements EventHandler<ActionEvent> {
                     rotateTransition.play();
                     // display result text
                     String roll = new String();
-                    lucky =lucky % 6 + 1;
+                    lucky = lucky % 6 + 1;
                     if (lucky == 1){
                         roll = "go " + Integer.toString(lucky) + " step";
                     }
@@ -87,7 +93,28 @@ class dice_handler implements EventHandler<ActionEvent> {
                         }
                     }
                     else if(lucky == 6){
-                        roll="eel";
+                        switch(steps.players_pos[steps.cur_player]){
+                            case 4:
+                                roll ="eel";
+                                slide=1;
+                                break;
+                            case 13:
+                                roll ="eel";
+                                slide=2;
+                                break;
+                            case 17:
+                                roll ="eel";
+                                slide=3;
+                                break;
+                            case 18:
+                                roll ="eel";
+                                slide=4;
+                                break;
+                            default:
+                                once=0;
+                                roll ="spin again";
+                                break;
+                        }
                     }
                     else{
                         roll = "play secreat game";
@@ -116,7 +143,7 @@ class dice_handler implements EventHandler<ActionEvent> {
         tmp_dice.dice_stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent e) {
-                if(lucky==5 || lucky==6){
+                if(lucky==5){
                     int aim=0;
                     Color color=steps.player_color[steps.cur_player];
                     moving.setFill(color);
@@ -143,7 +170,6 @@ class dice_handler implements EventHandler<ActionEvent> {
                             aim=14;
                             translateTransition.setFromX(400.0);
                             translateTransition.setFromY(340.0);
-                            
                             translateTransition.setToX(260.0);
                             translateTransition.setToY(190.0);
                             translateTransition.play();
@@ -157,7 +183,80 @@ class dice_handler implements EventHandler<ActionEvent> {
                         steps.set_pos_visible();
                         moving.setVisible(false);
                     });
-                    
+                }
+                else if(lucky==6){
+                    Color color=steps.player_color[steps.cur_player];
+                    switch(slide){
+                        //溜出去會回到原點
+                        case 1: //5
+                            moving.setFill(color);
+                            moving.setVisible(true);
+                            moving.setLayoutX(750.0);
+                            moving.setLayoutY(550.0);
+                            steps.eel[0].setRotate(165.0);
+                            PathTransition ani1=new PathTransition(Duration.millis(10000),steps.eel[0],moving);
+                            ani1.setCycleCount(1);
+                            ani1.play();
+                            steps.sliding();
+                            ani1.setOnFinished(e4->{
+                                moving.setVisible(false);
+                                steps.players_pos[steps.cur_player]=0;
+                                steps.set_pos_visible();
+                                steps.cur_player = (steps.cur_player + 1) % 4;
+                            });
+                            break;
+                        case 2: //13
+                            moving.setFill(color);
+                            moving.setVisible(true);
+                            moving.setLayoutX(255.0);
+                            moving.setLayoutY(360.0);
+                            steps.eel[1].setRotate(50.0);
+                            PathTransition ani2=new PathTransition(Duration.millis(10000),steps.eel[1],moving);
+                            ani2.setCycleCount(1);
+                            ani2.play();
+                            steps.sliding();
+                            ani2.setOnFinished(e4->{
+                                moving.setVisible(false);
+                                steps.players_pos[steps.cur_player]=0;
+                                steps.set_pos_visible();
+                                steps.cur_player = (steps.cur_player + 1) % 4;
+                            });
+                            break;
+                        case 3: //11-14
+                            moving.setFill(color);
+                            moving.setVisible(true);
+                            moving.setLayoutX(490.0);
+                            moving.setLayoutY(140.0);
+                            steps.eel[2].setRotate(195.0);
+                            PathTransition ani3=new PathTransition(Duration.millis(10000),steps.eel[2],moving);
+                            ani3.setCycleCount(1);
+                            ani3.play();
+                            steps.sliding();
+                            ani3.setOnFinished(e4->{
+                                moving.setVisible(false);
+                                steps.players_pos[steps.cur_player]=0;
+                                steps.set_pos_visible();
+                                steps.cur_player = (steps.cur_player + 1) % 4;
+                            });
+                            break;
+                        case 4:
+                            moving.setFill(color);
+                            moving.setVisible(true);
+                            moving.setLayoutX(700.0);
+                            moving.setLayoutY(350.0);
+                            steps.eel[3].setRotate(-250.0);
+                            PathTransition ani4=new PathTransition(Duration.millis(500),steps.eel[3],moving);
+                            ani4.setCycleCount(1);
+                            ani4.play();
+                            steps.sliding();
+                            ani4.setOnFinished(e4->{
+                                steps.players_pos[steps.cur_player]=3;
+                                steps.set_pos_visible();
+                                moving.setVisible(false);
+                                steps.cur_player = (steps.cur_player + 1) % 4;
+                            }); 
+                            break;
+                    }
                 }
                 else{
                     steps.players_pos[steps.cur_player] += lucky;
@@ -174,15 +273,18 @@ class dice_handler implements EventHandler<ActionEvent> {
 public class steps {
     public static Group[] steps = new Group[20];
     public static Group ladders=new Group(); //ladders
+    public static ObservableList<Double> eelsList0;
     public static Circle[][] player_sym = new Circle[20][4];
     public static Button dice = new Button("dice");
     public static int cur_player = 0;
     public static int[] players_pos = { 0, 0, 0, 0 };
     public static Color[] player_color = { Color.DARKSLATEGRAY, Color.DARKCYAN, Color.DARKGREY, Color.DARKMAGENTA };
+    public static Polyline[] eel=new Polyline[4]; //eel
+    public static Group[] eels=new Group[4];
     public static void create_ladders(){
         Rectangle[] basic=new Rectangle[3];
         for(int i=0;i<3;i++){
-            basic[i]=new Rectangle(70,200,Color.WHEAT);
+            basic[i]=new Rectangle(70,200,Color.TRANSPARENT);
             //basic[i].setStroke(Color.WHEAT);
         }
         basic[0].setLayoutX(365.0);
@@ -196,6 +298,63 @@ public class steps {
         basic[2].setRotate(47);
         ladders.getChildren().addAll(basic);
         set_pos_visible();
+    }
+    public static void create_eels(){
+        eel[0]=new Polyline();
+        eel[0].setFill(Color.TRANSPARENT);
+        eels[0]=new Group();
+        ObservableList<Double> eelsList0;
+        eelsList0=eel[0].getPoints();
+        for(int x=-170;x<=70;x++){
+            eelsList0.add(x+100.0);
+            eelsList0.add(-10*Math.sin((x/100.0)*2*Math.PI));
+        }
+        eels[0].getChildren().addAll(eel[0]);
+        eels[0].setLayoutX(750.0);
+        eels[0].setLayoutY(570.0);
+        eels[0].setRotate(-30.0);
+
+        eel[1]=new Polyline();
+        eel[1].setFill(Color.TRANSPARENT);
+        eels[1]=new Group();
+        ObservableList<Double> eelsList1;
+        eelsList1=eel[1].getPoints();
+        for(int x=-160;x<=70;x++){
+            eelsList1.add(x+100.0);
+            eelsList1.add(-10*Math.sin((x/100.0)*2*Math.PI));
+        }
+        eels[1].getChildren().addAll(eel[1]);
+        eels[1].setLayoutX(255.0);
+        eels[1].setLayoutY(360.0);
+        eels[1].setRotate(50.0);
+
+        eel[2]=new Polyline();
+        eel[2].setFill(Color.TRANSPARENT);
+        eels[2]=new Group();
+        ObservableList<Double> eelsList2;
+        eelsList2=eel[2].getPoints();
+        for(int x=-250;x<=70;x++){
+            eelsList2.add(x+100.0);
+            eelsList2.add(-5*Math.sin((x/100.0)*2*Math.PI));
+        }
+        eels[2].getChildren().addAll(eel[2]);
+        eels[2].setLayoutX(490.0);
+        eels[2].setLayoutY(145.0);
+        eels[2].setRotate(15.0);
+
+        eel[3]=new Polyline();
+        eel[3].setFill(Color.TRANSPARENT);
+        eels[3]=new Group();
+        ObservableList<Double> eelsList3;
+        eelsList3=eel[3].getPoints();
+        for(int x=-250;x<=70;x++){
+            eelsList3.add(x+100.0);
+            eelsList3.add(-10*Math.sin((x/100.0)*2*Math.PI));
+        }
+        eels[3].getChildren().addAll(eel[3]);
+        eels[3].setLayoutX(700.0);
+        eels[3].setLayoutY(350.0);
+        eels[3].setRotate(-70.0);
     }
     public static void creat_steps() {
         dice.setLayoutX(60);
@@ -275,5 +434,8 @@ public class steps {
             else
                 player_sym[i][3].setVisible(false);
         }
+    }
+    public static void sliding() {
+        player_sym[players_pos[cur_player]][cur_player].setVisible(false);
     }
 }
