@@ -40,17 +40,21 @@ class RoulettePane extends Pane {
 		// set 1 to 12
 		for (int i = 0; i < 12; i++) {
 			String num = new String();
-			if ((i + 1) % 6 + 1 == 4)
-				num = "?";
-			else if((i + 1) % 6 + 1 == 5)
+			if (i % 6 == 0)
+				num = "1";
+			else if (i % 6 == 1)
 				num = "//";
-			else if((i + 1) % 6 + 1 == 6)
-				num = "~";
+			else if (i % 6 == 2)
+				num = "3";
+			else if (i % 6 == 3)
+				num = "?";
+			else if (i % 6 == 4)
+				num = "2";
 			else
-				num = String.valueOf((i + 1) % 6 + 1);
+				num = "~";
 			Text number = new Text(
-					centerX + radius * 0.85 * Math.sin(Math.PI / 6 * (i + 1)) - 4,
-					centerY - radius * 0.85 * Math.cos(Math.PI / 6 * (i + 1)) + 2,
+					centerX + radius * 0.85 * Math.sin(Math.PI / 6 * (i )) - 4,
+					centerY - radius * 0.85 * Math.cos(Math.PI / 6 * (i )) + 2,
 					num);
 			getChildren().addAll(number);
 		}
