@@ -4,6 +4,10 @@ import javafx.fxml.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
 import javafx.util.Duration;
 import javafx.animation.RotateTransition;
 import javafx.application.Application;
@@ -79,7 +83,17 @@ class eelsAndEscalator extends Pane {
 }
 
 public class main_game extends Application {
+    public static Stage main_stage = new Stage();
+    public static BorderPane PausePane = new BorderPane();
+    public static PausePage pausepage = new PausePage();
+    public static BorderPane gamePane = new BorderPane();
+    public static Scene pausesScene = new Scene(PausePane, 1200, 700);
+    public static Scene scene;
+
+    public static Scene gamescene = new Scene(gamePane, 1200, 700);
+
     public void start(Stage arg0) {
+
         BorderPane Pane = new BorderPane();
         String StartGame = "CLICK TO START THE GAME";
         Label topicLabel = new Label(StartGame);
@@ -100,12 +114,12 @@ public class main_game extends Application {
         Pane.setBottom(topicLabel);
         BorderPane.setAlignment(topicLabel, Pos.CENTER);
 
-        Scene scene = new Scene(Pane, 1200, 700);
+        scene = new Scene(Pane, 1200, 700);
+        PausePane.setCenter(pausepage);
         Pane.setOnMouseClicked(ev -> {
             steps.creat_steps();
             steps.create_ladders();
             steps.create_eels();
-            BorderPane gamePane = new BorderPane();
             eelsAndEscalator game = new eelsAndEscalator();
             gamePane.setCenter(game);
 
@@ -121,22 +135,16 @@ public class main_game extends Application {
             top_box.setAlignment(Pos.CENTER);
             gamePane.setTop(top_box);
             BorderPane.setAlignment(restarButton, Pos.CENTER);
-            Scene gamescene = new Scene(gamePane, 1200, 700);
-            arg0.setScene(gamescene);
+            main_stage.setScene(gamescene);
 
             restarButton.setOnMouseClicked(cl -> {
-                BorderPane PausePane = new BorderPane();
-                PausePage pausepage = new PausePage(arg0, new BorderPane(Pane), game, gamescene);
-                PausePane.setCenter(pausepage);
-                Scene pausesScene = new Scene(PausePane, 1200, 700);
-                arg0.setScene(pausesScene);
-
+                main_stage.setScene(pausesScene);
             });
         });
 
-        arg0.setTitle("EELS AND ESCALATOR");
-        arg0.setScene(scene); // Place the scene in the stage
-        arg0.show(); // Display the stage
+        main_stage.setTitle("EELS AND ESCALATOR");
+        main_stage.setScene(scene); // Place the scene in the stage
+        main_stage.show(); // Display the stage
     }
 
     public static void main(String[] args) {
